@@ -1,28 +1,34 @@
 <template>
-  <div class="fine-dialog_wrapper">
-    <div class="fine-dialog" :style="{width:width,marginTop:top}">
-      <div class="fine-dialog_header">
-        <slot name="title">
-          <span class="fine-dialog_title">{{title}}</span>
-        </slot>
-        <button class="fine-dialog_headerbtn">
-          <i class="fine-icon-close"></i>
-        </button>
-      </div>
-      <div class="fine-dialog_body">
-        <span>这是一段信息</span>
-      </div>
-      <div class="fine-dialog_footer">
-        <fine-button>取消</fine-button>
-        <fine-button type="primary">确定</fine-button>
+  <transition name="dialog-fade">
+    <div class="fine-dialog_wrapper" v-show="visible" @click.self="handleClose">
+      <div class="fine-dialog" :style="{width:width,marginTop:top}">
+        <div class="fine-dialog_header">
+          <slot name="title">
+            <span class="fine-dialog_title">{{title}}</span>
+          </slot>
+          <button class="fine-dialog_headerbtn" @click="handleClose">
+            <i class="fine-icon-close"></i>
+          </button>
+        </div>
+        <div class="fine-dialog_body">
+          <slot></slot>
+        </div>
+        <div class="fine-dialog_footer">
+          <slot name="footer" v-if="$slots.footer"></slot>
+        </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
 export default {
   name: "fineDialog",
+  data() {
+    return {
+      show: false
+    };
+  },
   props: {
     title: {
       type: String,
@@ -35,6 +41,18 @@ export default {
     top: {
       type: String,
       default: "100px"
+    },
+    footer: {
+      type: Object
+    },
+    visible: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    handleClose() {
+      this.$emit("update:visible", false);
     }
   }
 };
@@ -95,6 +113,22 @@ export default {
         margin-right: 20px;
       }
     }
+  }
+}
+.dialog-fade-enter-active {
+  animation: fade 0.3s;
+}
+.dialog-fade-leave-active {
+  animation: fade 0.2s reverse;
+}
+@keyframes fade {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 </style>
