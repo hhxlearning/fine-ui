@@ -4,10 +4,13 @@ import router from './router'
 
 import './assets/iconfont/iconfont.css'
 
-import FineButton from './components/Button.vue'
+
+import Button from './components/Button.vue'
 import Dialog from './components/Dialog.vue'
-Vue.component(FineButton.name, FineButton)
+import Card from './components/Card.vue'
+Vue.component(Button.name, Button)
 Vue.component(Dialog.name, Dialog)
+Vue.component(Card.name, Card)
 
 
 Vue.config.productionTip = false

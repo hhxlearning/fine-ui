@@ -2,12 +2,12 @@
   <transition name="dialog-fade">
     <div class="fine-dialog_wrapper" v-show="visible" @click.self="handleClose">
       <div class="fine-dialog" :style="{width:width,marginTop:top}">
-        <div class="fine-dialog_header">
+        <div class="fine-dialog_header" :class="`dialog-type-${type}`">
           <slot name="title">
             <span class="fine-dialog_title">{{title}}</span>
           </slot>
           <button class="fine-dialog_headerbtn" @click="handleClose">
-            <i class="fine-icon-close"></i>
+            <i class="he-icon-close"></i>
           </button>
         </div>
         <div class="fine-dialog_body">
@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: "fineDialog",
+  name: "HeDialog",
   data() {
     return {
       show: false
@@ -33,6 +33,10 @@ export default {
     title: {
       type: String,
       default: "提示"
+    },
+    type: {
+      type: String,
+      default: "primary"
     },
     width: {
       type: String,
@@ -78,15 +82,17 @@ export default {
     box-sizing: border-box;
     width: 30%;
     &_header {
-      padding: 20px 20px 10px;
+      padding: 10px;
+      // background: $theme;
       .fine-dialog_title {
         line-height: 24px;
-        font-size: 18px;
-        color: #303133;
+        font-size: 14px;
+        // color: #303133;
+        color: #ffffff;
       }
       .fine-dialog_headerbtn {
         position: absolute;
-        top: 20px;
+        top: 14px;
         right: 20px;
         padding: 0;
         background: transparent;
@@ -94,8 +100,8 @@ export default {
         outline: none;
         cursor: pointer;
         font-size: 16px;
-        .fine-icon-close {
-          color: 909399;
+        i {
+          color: #fff;
         }
       }
     }
@@ -114,6 +120,12 @@ export default {
       }
     }
   }
+}
+.dialog-type-primary {
+  background: $primaryColor;
+}
+.dialog-type-info {
+  background: $infoColor;
 }
 .dialog-fade-enter-active {
   animation: fade 0.3s;
